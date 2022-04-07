@@ -1,0 +1,31 @@
+<div th:insert="fragments/header :: modelheader"></div>
+<head>
+    <title>Carrinho de Compras</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <table class="table table-bordered" border="1">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tr th:each="iv : ${session.venda.itens}">
+            <td th:text="${iv.produto.descricao}"> </td>
+            <td th:text="${iv.qtd}"> </td>
+            <td th:text="${#numbers.formatCurrency(iv.total())}"></td>
+        </tr>
+    </table>
+    <a class="btn btn-success" href="/produtos/list" role="button">Continuar Comprando</a>
+
+    <form th:action="@{/vendas/save}" th:object="${venda}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{data}">
+        <input type="submit" value="Finalizar Compra">
+    </form>
+</body>
+<div th:insert="fragments/footer :: modelfooter"></div>
+</html>
