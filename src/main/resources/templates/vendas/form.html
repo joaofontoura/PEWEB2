@@ -1,0 +1,40 @@
+<div th:insert="fragments/header :: modelheader"></div>
+<div class="container">
+    <head>
+        <title>Carrinho de Compras</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+         <div th:class="${!#strings.isEmpty(Erro)} ? 'alert alert-danger'" >
+            <span th:text="${!#strings.isEmpty(Erro)} ? ${Erro}"> </span>
+        </div>
+        <table class="table table-bordered" border="1">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Total</th>
+                </tr>
+            </thead>       
+
+            <tr th:each="iv : ${session.venda.itens}">
+                <td th:text="${iv.produto.descricao}"> </td>
+                <td th:text="${iv.qtd}"> </td>
+                <td th:text="${#numbers.formatCurrency(iv.total())}"></td>
+            </tr>            
+        </table>           
+        <a class="btn btn-success" href="/produtos/list" role="button">Continuar Comprando</a>    
+
+        <form th:action="@{/vendas/save}" method="get">
+            <select th:name="id_cliente" class="form-control" id="dropDownList">
+                <option value="0">Selecione um cliente</option>
+                <option th:each="clientePF : ${clientesPF}" th:value="${clientePF.id}" 
+                th:text="${clientePF.nome}"></option>
+            </select>  
+            <button type="submit" value="Enviar" class="btn btn-primary mb-2">Enviar</button>
+        </form>
+    </body>    
+</div>
+
+<div th:insert="fragments/footer :: modelfooter"></div>

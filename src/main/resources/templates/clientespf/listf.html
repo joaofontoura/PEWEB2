@@ -1,0 +1,35 @@
+<div th:insert="fragments/header :: modelheader"></div>
+<div class="container">
+    <head>
+        <title>Lista de Clientes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <table class="table table-bordered" border="1">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Editar/Excluir</th>
+            </tr>
+        </thead>
+        <tr th:each="cf : ${clientespf}">
+            <td th:text="${cf.id}"> </td>
+            <td th:text="${cf.nome}"> </td>
+            <td th:text="${cf.cpf}"> </td>
+            <td><div class="btn-group" role="group"> 
+                    <a th:href="@{/clientespf/edit/{id}(id=${cf.id})}">
+                        <button type="button" id="editar" class="btn btn-light">Editar</button></a>
+
+                    <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"
+                       th:href="@{/clientespf/remove/{id}(id=${cf.id})}">
+                        <button type="button" class="btn btn-dark">Excluir</button></a>
+            </td>
+        </tr>
+    </table>
+    <a href="/clientespf/formf" role="button">Adicionar Cliente</a>
+</body>
+</div>
+<div th:insert="fragments/footer :: modelfooter"></div>
